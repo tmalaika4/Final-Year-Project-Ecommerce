@@ -1,0 +1,30 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 30px;
+    box-shadow: 0 1px 3px -2px #000;
+    margin-bottom: 1px;
+    background: white;
+}
+.left-nav{
+    display: flex;
+}
+.nav-logo{
+    width: 200;
+}
+.nav-profile{
+    display: flex;
+    align-items: center; /* Center items vertically if there are multiple elements */
+    width: 75px;
+}
+@media(max-width:800px){
+    .navbar{
+        padding: 15px 30px;
+    }
+    .nav-logo{
+        width: 150px;
+    }
+    .nav-profile{
+        width: 60px;
+    }
+}
