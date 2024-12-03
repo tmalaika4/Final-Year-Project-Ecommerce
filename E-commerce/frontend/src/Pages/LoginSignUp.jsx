@@ -5,8 +5,8 @@ const LoginSignUp = () => {
   const [state, setState] = useState("Login");
   const [formData,setFromData] = useState({
     name: "",
-    password: "",
-    email:""
+    email: "",
+    password:""
   })
 
   const changeHandler = (e) => {
@@ -39,7 +39,7 @@ const LoginSignUp = () => {
   const signup = async () => {
     console.log("signup Function Executed", formData);
     try {
-      const response = await fetch(`http://localhost:5000/signup?email=${formData.email}&name=${formData.name}&password=${formData.password}`, {
+      const response = await fetch(`http://localhost:5000/signup?name=${formData.name}&email=${formData.email}&password=${formData.password}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
