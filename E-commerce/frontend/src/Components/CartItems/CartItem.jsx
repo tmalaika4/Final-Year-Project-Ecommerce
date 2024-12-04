@@ -20,7 +20,7 @@ const CartItem = () => {
                 <p>Remove</p>
             </div>
             <hr />
-            {all_product.map((e) => {
+            {all_product && all_product.map((e) => {
                 if (cartItems[e.id] > 0) {
                     return (
                         <div key={e.id}> {/* Ensure each item has a unique key */}

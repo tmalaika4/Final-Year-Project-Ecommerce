@@ -22,7 +22,6 @@ const Users = mongoose.model('Users', {
 // Welcome endpoint
 app.get("/", (req, res) => {
     res.json({
-        groupNumber: "Your Group Number",
         groupMembers: ["Malaika Tabassum", "Farah Shamshair", "Laiba Naeem"],
         projectTitle: "InStyle Cloth Store"
     });

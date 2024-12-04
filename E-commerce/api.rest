@@ -1,0 +1,48 @@
+GET http://localhost:5000/
+
+//                          create
+###
+GET http://localhost:5000/signup?name=majid&email=majid@email.com&password=majid
+
+###
+GET http://localhost:5000/signup?name=absar&email=absar@email.com&password=absar
+
+###
+GET http://localhost:5000/signup?name=bilal&email=bilal@email.com&password=bilal
+
+//                          duplicate user
+###
+GET http://localhost:5000/signup?name=majid&email=majid@email.com&password=majid
+
+
+//                           read all
+###
+GET http://localhost:5000/all
+
+//                          read
+###
+GET http://localhost:5000/login?email=majid@email.com
+
+
+//                          update
+###
+GET http://localhost:5000/update?name=naeem&email=majid@email.com
+
+//                          delete
+###
+GET http://localhost:5000/delete?email=majid@email.com
+
+###
+GET http://localhost:5000/all
+
+###
+GET http://localhost:5000/delete?email=absar@email.com
+
+###
+GET http://localhost:5000/all
+
+###
+GET http://localhost:5000/delete?email=bilal@email.com
+
+###
+GET http://localhost:5000/all
