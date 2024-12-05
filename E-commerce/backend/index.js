@@ -25,7 +25,7 @@ app.get("/",(req,res)=>{
 
 
 // Cloudinary configuration
-cloudinary.config({
+/*cloudinary.config({
   cloud_name: 'dzfkbjy06',
   api_key: '462634848272943',
   api_secret: 'WMJCIiXRWhr-PMeYeLzMxl_3oMM',
@@ -52,9 +52,9 @@ app.post('/upload', upload.single('product'), (req, res) => {
 });
 
 //app.listen(3000, () => console.log('Server running on port 3000'));
-
+*/
 //Image Storage Engine
-/*const storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: './upload/images',
     filename:(req, file, cb) =>{
         cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
@@ -69,9 +69,9 @@ app.post("/upload",upload.single('product'),(req, res) =>{
 
     res.json({
         success:1,
-        image_url:`http://localhost:${port}/images/${req.file.filename}`
+        image_url:`https://final-year-project-ecommerce.onrender.com/images/${req.file.filename}`
     })
-})*/
+})
 
 //Schema for Creating Products
 const Product = mongoose.model("Product",{
