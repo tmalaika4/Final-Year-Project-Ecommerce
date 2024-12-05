@@ -18,7 +18,7 @@ const ShopContextProvider = (props) =>{
 
     useEffect(() => {
         if (!all_product) {
-            fetch('https://final-year-project-ecommerce.onrender.com/allproducts')
+            fetch('http://localhost:4000/allproducts')
                 .then((response) => response.json())
                 .then((data) => setAll_Product(data));
         } else {
