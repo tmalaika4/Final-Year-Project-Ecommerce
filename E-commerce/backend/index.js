@@ -25,7 +25,7 @@ app.get("/",(req,res)=>{
 
 
 
-(async function() {
+/*(async function() {
 
     // Configuration
     cloudinary.config({ 
@@ -64,7 +64,7 @@ app.get("/",(req,res)=>{
     });
     
     console.log(autoCropUrl);    
-})();
+})();*/
 //app.listen(3000, () => console.log('Server running on port 3000'));
 
 //Image Storage Engine
