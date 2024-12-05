@@ -33,8 +33,9 @@ const AddProduct = () => {
                 Accept:'application/json',
             },
             body:formData,
+            
         }).then((resp) => resp.json()).then((data)=>{responseData=data})
-
+        console.log(responseData);
         if(responseData.success){
             product.image = responseData.image_url;
             console.log(product);

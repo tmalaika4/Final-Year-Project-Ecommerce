@@ -80,6 +80,7 @@ const upload  = multer({storage: storage})
 app.use('/images', express.static(path.join(__dirname, 'upload/images')));
 
 app.post("/upload",upload.single('product'),(req, res) =>{
+  console.log(`Image URL: https://final-year-project-ecommerce.onrender.com/images/${req.file.filename}`);
 
     res.json({
         success:1,
