@@ -5,6 +5,8 @@ const app = express();
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const { v2: cloudinary } = require('cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const path = require("path");
 const cors = require("cors");
 const { type } = require("os");
@@ -22,10 +24,37 @@ app.get("/",(req,res)=>{
 })
 
 
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: 'dzfkbjy06',
+  api_key: '462634848272943',
+  api_secret: 'WMJCIiXRWhr-PMeYeLzMxl_3oMM',
+});
 
+// Set up Cloudinary storage for Multer
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+      folder: 'images', // Folder name in Cloudinary
+      format: async (req, file) => 'png', // Format to save images
+      public_id: (req, file) => `${file.fieldname}_${Date.now()}`,
+  },
+});
+
+const upload = multer({ storage });
+
+// Upload endpoint
+app.post('/upload', upload.single('product'), (req, res) => {
+  res.json({
+      success: 1,
+      image_url: req.file.path, // Cloudinary URL for the uploaded image
+  });
+});
+
+//app.listen(3000, () => console.log('Server running on port 3000'));
 
 //Image Storage Engine
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
     destination: './upload/images',
     filename:(req, file, cb) =>{
         cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
@@ -42,7 +71,7 @@ app.post("/upload",upload.single('product'),(req, res) =>{
         success:1,
         image_url:`http://localhost:${port}/images/${req.file.filename}`
     })
-})
+})*/
 
 //Schema for Creating Products
 const Product = mongoose.model("Product",{
