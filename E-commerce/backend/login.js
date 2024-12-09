@@ -89,8 +89,27 @@ app.get('/login', async (req, res) => {
     }
 });
 
+// Middleware to authenticate token
+const authenticateToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token) {
+        return res.status(401).json({ success: false, message: "Access denied. No token provided." });
+    }
+
+    try {
+        console.log("authenticating");
+        const verified = jwt.verify(token, 'secret_ecom'); // Replace 'secret_ecom' with a more secure secret stored in environment variables
+        console.log(verified);
+        
+        req.user = verified.user; // Attach the user payload to the request object
+        next(); // Proceed to the next middleware or route handler
+    } catch (error) {
+        res.status(400).json({ success: false, message: "Invalid token" });
+    }
+};
+
 // Read all users (READ all)
-app.get('/all', async (req, res) => {
+app.get('/all',authenticateToken, async (req, res) => {
     try {
         const users = await Users.find({});
         res.json({ success: true, users });
@@ -100,7 +119,7 @@ app.get('/all', async (req, res) => {
 });
 
 // Update user data by email (UPDATE)
-app.get('/update', async (req, res) => {
+app.get('/update',authenticateToken, async (req, res) => {
     const { email, name, password } = req.query;
 
     if (!email) {
@@ -124,7 +143,7 @@ app.get('/update', async (req, res) => {
 });
 
 // Delete user by email (DELETE)
-app.get('/delete', async (req, res) => {
+app.get('/delete',authenticateToken, async (req, res) => {
     const { email } = req.query;
 
     if (!email) {
