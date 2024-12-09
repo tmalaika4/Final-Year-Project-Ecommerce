@@ -4,9 +4,9 @@ const { JsonWebTokenError } = require("jsonwebtoken");
 const app = express();
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
-const { v2: cloudinary } = require('cloudinary');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');  // Correct way to import CloudinaryStorage
 const path = require("path");
 const cors = require("cors");
 const { type } = require("os");
@@ -23,52 +23,33 @@ app.get("/",(req,res)=>{
   });
 })
 
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: 'dzfkbjy06', // Replace with your Cloudinary cloud name
+  api_key: '462634848272943', // Replace with your Cloudinary API key
+  api_secret: 'WMJCIiXRWhr-PMeYeLzMxl_3oMM', // Replace with your Cloudinary API secret
+});
 
+// Set up Cloudinary storage for multer
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'product-images', // Optional: Folder in Cloudinary
+    allowed_formats: ['jpg', 'png', 'jpeg'], // Allowed image formats
+  },
+});
 
-/*(async function() {
-
-    // Configuration
-    cloudinary.config({ 
-        cloud_name: 'dzfkbjy06', 
-        api_key: '462634848272943', 
-        api_secret: 'CLOUDINARY_URL=cloudinary://462634848272943:WMJCIiXRWhr-PMeYeLzMxl_3oMM@dzfkbjy06' // Click 'View API Keys' above to copy your API secret
-    });
-    
-    // Upload an image
-     const uploadResult = await cloudinary.uploader
-       .upload(
-           'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-               public_id: 'shoes',
-           }
-       )
-       .catch((error) => {
-           console.log(error);
-       });
-    
-    console.log(uploadResult);
-    
-    // Optimize delivery by resizing and applying auto-format and auto-quality
-    const optimizeUrl = cloudinary.url('shoes', {
-        fetch_format: 'auto',
-        quality: 'auto'
-    });
-    
-    console.log(optimizeUrl);
-    
-    // Transform the image: auto-crop to square aspect_ratio
-    const autoCropUrl = cloudinary.url('shoes', {
-        crop: 'auto',
-        gravity: 'auto',
-        width: 500,
-        height: 500,
-    });
-    
-    console.log(autoCropUrl);    
-})();*/
-//app.listen(3000, () => console.log('Server running on port 3000'));
-
+const upload = multer({ storage: storage });
+// Cloudinary image upload endpoint
+app.post('/upload', upload.single('product'), (req, res) => {
+  // The image URL will be provided by Cloudinary after uploading
+  res.json({
+    success: 1,
+    image_url: req.file.secure_url, // Cloudinary URL
+  });
+});
 //Image Storage Engine
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
     destination: './upload/images',
     filename:(req, file, cb) =>{
         cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
@@ -85,7 +66,7 @@ app.post("/upload",upload.single('product'),(req, res) =>{
         success:1,
         image_url:`http://localhost:${port}/images/${req.file.filename}`
     })
-})
+})*/
 
 //Schema for Creating Products
 const Product = mongoose.model("Product",{

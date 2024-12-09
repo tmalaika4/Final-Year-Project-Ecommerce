@@ -11,6 +11,7 @@ app.use(cors());
 // MongoDB connection
 mongoose.connect("mongodb+srv://tmalaika:malaika1234@user.bkswf.mongodb.net/?retryWrites=true&w=majority&appName=user");
 
+
 const Users = mongoose.model('Users', {
     name: { type: String },
     email: { type: String, unique: true },
