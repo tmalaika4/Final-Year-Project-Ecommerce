@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const uri = process.env.MONGO_URI;
+const uri = "mongodb+srv://tmalaika:malaika1234@user.bkswf.mongodb.net/?retryWrites=true&w=majority&appName=user";
 
 mongoose.connect(uri)
   .then(() => console.log('Connected to MongoDB successfully'))
