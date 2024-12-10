@@ -1,5 +1,6 @@
 const port = 5000;
 const express = require("express");
+require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -8,8 +9,14 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const uri = process.env.MONGO_URI;
+
+mongoose.connect(uri)
+  .then(() => console.log('Connected to MongoDB successfully'))
+  .catch((err) => console.error('Failed to connect to MongoDB:', err));
+
 // MongoDB connection
-mongoose.connect("mongodb+srv://tmalaika:malaika1234@user.bkswf.mongodb.net/?retryWrites=true&w=majority&appName=user");
+//mongoose.connect(uri);
 
 
 const Users = mongoose.model('Users', {

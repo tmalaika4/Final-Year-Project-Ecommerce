@@ -2,6 +2,7 @@ const port = 4000;
 const express = require("express");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const app = express();
+require('dotenv').config();
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
@@ -14,7 +15,11 @@ const { type } = require("os");
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://malaikadev:malaika123@cluster0.c3gusfu.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Cluster0");
+const uri = process.env.MONGO_URI2;
+
+mongoose.connect(uri)
+  .then(() => console.log('Connected to MongoDB successfully'))
+  .catch((err) => console.error('Failed to connect to MongoDB:', err));
 
 app.get("/",(req,res)=>{
   res.json({
@@ -25,9 +30,9 @@ app.get("/",(req,res)=>{
 
 // Cloudinary configuration
 cloudinary.config({
-  cloud_name: 'dzfkbjy06', // Replace with your Cloudinary cloud name
-  api_key: '462634848272943', // Replace with your Cloudinary API key
-  api_secret: 'WMJCIiXRWhr-PMeYeLzMxl_3oMM', // Replace with your Cloudinary API secret
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 
 // Set up Cloudinary storage for multer
@@ -42,12 +47,15 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 // Cloudinary image upload endpoint
 app.post('/upload', upload.single('product'), (req, res) => {
-  // The image URL will be provided by Cloudinary after uploading
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No file uploaded" });
+  }
   res.json({
-    success: 1,
-    image_url: req.file.secure_url, // Cloudinary URL
+    success: true,
+    image_url: req.file.path || req.file.secure_url, // Check for correct Cloudinary URL
   });
 });
+
 //Image Storage Engine
 /*const storage = multer.diskStorage({
     destination: './upload/images',
@@ -104,45 +112,102 @@ const Product = mongoose.model("Product",{
       },
 })
 
-app.post('/addproduct', async(req,res)=>{
-    let products = await Product.find({});
-    let id;
-    if(products.length>0){
-      let last_product_array = products.slice(-1);
-      let last_product = last_product_array[0];
-      id = last_product.id+1;
-    }
-    else{
-      id = 1;
-    }
-    const product = new Product({
-        id:id,
-        name:req.body.name,
-        image:req.body.image,
-        category:req.body.category,
-        new_price:req.body.new_price,
-        old_price:req.body.old_price,
+app.post('/addproduct', async (req, res) => {
+  try {
+      console.log("Received Data:", req.body); // Log the incoming data
 
-    });
-     console.log(product);
-     await product.save();
-     console.log("Saved");
-     res.json({
-        success:true,
-        name:req.body.name, 
-     })
-})
+      let products = await Product.find({});
+      let id;
+      if (products.length > 0) {
+          let last_product = products[products.length - 1];
+          id = last_product.id + 1;
+      } else {
+          id = 1;
+      }
+
+      const { name, image, category, new_price, old_price } = req.body;
+
+      // Validate the data
+      if (!name || !image || !category || isNaN(new_price) || isNaN(old_price)) {
+          return res.status(400).json({ success: false, message: "Invalid product data" });
+      }
+
+      const product = new Product({
+          id: id,
+          name: name,
+          image: image,
+          category: category,
+          new_price: Number(new_price),
+          old_price: Number(old_price),
+      });
+
+      console.log("Product to be saved:", product); // Log the product data before saving
+
+      await product.save();
+      console.log("Saved product to database");
+      res.json({
+          success: true,
+          name: name,
+      });
+  } catch (error) {
+      console.error("Error saving product:", error);
+      res.status(500).json({ success: false, message: "Server error" });
+  }
+});
 
 //Creating API For deleting Products
-app.post('/removeproduct' , async(req,res)=>{
-  await Product.findOneAndDelete({id:req.body.id});
-  console.log("Removed");
-  res.json({
-    success:true,
-    name:req.body.name
 
-  })
-})
+
+app.post('/removeproduct', async (req, res) => {
+    try {
+        const productId = req.body.id;
+
+        // Fetch the product details to get the image URL
+        const product = await Product.findOne({ id: productId });
+
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Extract the public ID (remove the file extension from the image URL)
+        let publicId = product.image.split('/').slice(-2).join('/'); // Extracts the image path
+        publicId = publicId.replace(/\.[^/.]+$/, ''); // Removes the file extension (.png, .jpg, etc.)
+
+        console.log('Attempting to delete image with public ID:', publicId);
+
+        // Delete the image from Cloudinary
+        cloudinary.uploader.destroy(publicId, (error, result) => {
+            if (error) {
+                console.error('Error deleting image from Cloudinary:', error);
+                return res.status(500).json({ success: false, message: "Failed to delete image from Cloudinary" });
+            }
+
+            if (result.result === 'not found') {
+                console.log('Image not found in Cloudinary, skipping deletion.');
+            } else {
+                console.log('Image deleted from Cloudinary:', result);
+            }
+
+            // Now, delete the product from the database
+            Product.findOneAndDelete({ id: productId })
+                .then(() => {
+                    res.json({
+                        success: true,
+                        message: 'Product and image deleted successfully',
+                    });
+                })
+                .catch((err) => {
+                    console.error('Error deleting product from DB:', err);
+                    res.status(500).json({ success: false, message: 'Failed to delete product from database' });
+                });
+        });
+    } catch (error) {
+        console.error('Error removing product:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+
 
 //Creating API for getting all products
 app.get('/allproducts', async (req, res)=>{
@@ -150,13 +215,17 @@ app.get('/allproducts', async (req, res)=>{
   console.log("All Products Fetched");
   res.send(products);
 })
-// creating endpoint for newcollection data
-app.get('/newcollections',async(req, res)=>{
-  let products = await Product.find({});
-  let newCollection = products.slice(1).slice(-8);
-  console.log("NewCollection Fetched");
-  res.send(newCollection);
-})
+app.get('/newcollections', async (req, res) => {
+  try {
+    let products = await Product.find({});
+    let newCollection = products.length > 8 ? products.slice(-8) : products;
+    res.json(newCollection);
+  } catch (err) {
+    console.error("Error fetching new collections:", err);
+    res.status(500).json({ success: false, message: "Error fetching new collections" });
+  }
+});
+
 
 // creating endpoint for popular in women section
 app.get('/popularinwomen', async(req, res)=>{

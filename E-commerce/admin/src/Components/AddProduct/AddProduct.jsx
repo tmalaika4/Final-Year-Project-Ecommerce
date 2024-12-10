@@ -19,39 +19,55 @@ const AddProduct = () => {
     const changeHandler = (e) =>{
         setProductDetails({...productDetails,[e.target.name]:e.target.value})
     }
-    const Add_Product = async () =>{
+    const Add_Product = async () => {
         console.log(productDetails);
         let responseData;
-        let product = productDetails;
-
+        let product = { ...productDetails }; // Create a copy of productDetails
+    
         let formData = new FormData();
         formData.append('product', image);
-
-        await fetch('http://localhost:4000/upload',{
-            method:'POST',
-            headers:{
-                Accept:'application/json',
+    
+        await fetch('http://localhost:4000/upload', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
             },
-            body:formData,
-            
-        }).then((resp) => resp.json()).then((data)=>{responseData=data})
-        console.log(responseData);
-        if(responseData.success){
+            body: formData,
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                responseData = data;
+            });
+        console.log("Upload Response:", responseData);
+    
+        if (responseData.success) {
             product.image = responseData.image_url;
-            console.log(product);
-            await fetch('http://localhost:4000/addproduct',{
-                method:'POST',
-                headers:{
-                    Accept:'application/json',
-                    'Content-Type':'application/json',
+    
+            // Convert price fields to numbers
+            product.new_price = Number(product.new_price);
+            product.old_price = Number(product.old_price);
+    
+            console.log("Final Product Data:", product);
+    
+            await fetch('http://localhost:4000/addproduct', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body:JSON.stringify(product),
-            }).then((resp)=>resp.json()).then((data)=>{
-                data.success?alert("Product Added"):alert("Failed")
-
+                body: JSON.stringify(product),
             })
+                .then((resp) => resp.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert("Product Added");
+                    } else {
+                        alert("Failed");
+                    }
+                });
         }
-    }
+    };
+    
   return (
     <div className='add-product'>
         <div className="addproduct-itemfield">
