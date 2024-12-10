@@ -15,7 +15,7 @@ const { type } = require("os");
 app.use(express.json());
 app.use(cors());
 
-const mongoURI = process.env.MONGO_URI || 'your_mongodb_connection_string_here';
+const mongoURI = "mongodb+srv://malaikadev:malaika123@cluster0.c3gusfu.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Cluster0"
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
