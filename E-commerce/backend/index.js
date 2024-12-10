@@ -17,7 +17,7 @@ app.use(cors());
 
 const mongoURI = "mongodb+srv://malaikadev:malaika123@cluster0.c3gusfu.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Cluster0"
 
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
