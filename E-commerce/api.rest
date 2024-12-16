@@ -1,50 +1,50 @@
-GET http://localhost:5000/
+GET https://final-year-project-ecommerce-exri.onrender.com/
 
 //                          create
 ###
-GET http://localhost:5000/signup?name=majid&email=majid@email.com&password=majid
+GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=majid&email=majid@email.com&password=majid
 
 ###
-GET http://localhost:5000/signup?name=absar&email=absar@email.com&password=absar
+GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=absar&email=absar@email.com&password=absar
 
 ###
-GET http://localhost:5000/signup?name=bilal&email=bilal@email.com&password=bilal
+GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=bilal&email=bilal@email.com&password=bilal
 
 //                          duplicate user
 ###
-GET http://localhost:5000/signup?name=majid&email=majid@email.com&password=majid
+GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=majid&email=majid@email.com&password=majid
 
 
 //                           read all
 ###
-GET http://localhost:5000/all
+GET https://final-year-project-ecommerce-exri.onrender.com/all
 
 //                          read
 ###
-GET http://localhost:5000/login?email=majid@email.com
+GET https://final-year-project-ecommerce-exri.onrender.com/login?email=majid@email.com
 
 
 //                          update
 ###
-GET http://localhost:5000/update?name=naeem&email=majid@email.com
+GET https://final-year-project-ecommerce-exri.onrender.com/update?name=naeem&email=majid@email.com
 auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NWZlNGM0NDA5ZGFiNDE4ODc3ZTQ2ZCIsImVtYWlsIjoibWFqaWRAZW1haWwuY29tIiwiaWF0IjoxNzM0MzM5NDU1fQ.eE1IKpuOwL8EiqV4ZB9vo1cNQSgHWyTB7yG-ZTX_XKM
 ###
 
 //                          delete
 ###
-GET http://localhost:5000/delete?email=absar@email.com
+GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=absar@email.com
 auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NTJiZjhkMjI4YmMyZTdmZTg3MmJiOSIsImVtYWlsIjoiYWJzYXJAZW1haWwuY29tIiwiaWF0IjoxNzM0MzM5Mzg2fQ.nsfr5MPJKYKoHmaqvuy5k6s_xcuiK0u9dEhdYWhH5oU
 ###
-GET http://localhost:5000/all
+GET https://final-year-project-ecommerce-exri.onrender.com/all
 
 ###
-GET http://localhost:5000/login?email=absar@email.com
+GET https://final-year-project-ecommerce-exri.onrender.com/login?email=absar@email.com
 
 ###
-GET http://localhost:5000/all
+GET https://final-year-project-ecommerce-exri.onrender.com/all
 
 ###
-GET http://localhost:5000/delete?email=bilal@email.com
+GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=bilal@email.com
 
 ###
-GET http://localhost:5000/all
+GET https://final-year-project-ecommerce-exri.onrender.com/all
