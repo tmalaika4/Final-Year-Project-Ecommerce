@@ -100,7 +100,6 @@ app.get('/login', async (req, res) => {
                  
                     id: user.id,
                     email: user.email,
-                    name: user.name
                   
                 },
                 'secret_ecom'
@@ -116,23 +115,19 @@ app.get('/login', async (req, res) => {
 });
 
 // Middleware to authenticate token
-const authenticateToken = (req, res, next) => {
-    const token = req.headers['authorization'];
-    if (!token) {
-        return res.status(401).json({ success: false, message: "Access denied. No token provided." });
-    }
+const authenticateToken = async (req, res, next) => {
+    const token = req.header('auth-token');
+    if (!token) return res.status(401).json({ errors: "Please authenticate using valid token" });
 
     try {
-        console.log("authenticating");
-        const verified = jwt.verify(token, 'secret_ecom'); // Replace 'secret_ecom' with a more secure secret stored in environment variables
-        console.log(verified);
-        
-        req.user = verified.user; // Attach the user payload to the request object
-        next(); // Proceed to the next middleware or route handler
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // Attach the user info to the request
+        next();
     } catch (error) {
-        res.status(400).json({ success: false, message: "Invalid token" });
+        res.status(401).json({ errors: "Invalid token" });
     }
 };
+
 
 // Read all users (READ all)
 app.get('/all',authenticateToken, async (req, res) => {

@@ -15,7 +15,7 @@ const LoginSignUp = () => {
   const login = async () => {
     console.log("Login Function Executed", formData);
     try {
-      const response = await fetch('https://final-year-project-ecommerce-exri.onrender.com/login?email='+formData.email, {
+      const response = await fetch('http://localhost:5000/login?email='+formData.email, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -39,7 +39,7 @@ const LoginSignUp = () => {
   const signup = async () => {
     console.log("signup Function Executed", formData);
     try {
-      const response = await fetch(`https://final-year-project-ecommerce-exri.onrender.com/signup?name=${formData.name}&email=${formData.email}&password=${formData.password}`, {
+      const response = await fetch(`http://localhost:5000/signup?name=${formData.name}&email=${formData.email}&password=${formData.password}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',

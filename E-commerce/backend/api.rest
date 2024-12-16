@@ -1,48 +1,48 @@
-GET https://final-year-project-ecommerce-exri.onrender.com/
+GET http://localhost:5000/
 
 //                          create
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=majid&email=majid@email.com&password=majid
+GET http://localhost:5000/signup?name=majid&email=majid@email.com&password=majid
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=absar&email=absar@email.com&password=absar
+GET http://localhost:5000/signup?name=absar&email=absar@email.com&password=absar
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=bilal&email=bilal@email.com&password=bilal
+GET http://localhost:5000/signup?name=bilal&email=bilal@email.com&password=bilal
 
 //                          duplicate user
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/signup?name=majid&email=majid@email.com&password=majid
+GET http://localhost:5000/signup?name=majid&email=majid@email.com&password=majid
 
 
 //                           read all
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/all
+GET http://localhost:5000/all
 
 //                          read
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/login?email=majid@email.com
+GET http://localhost:5000/login?email=majid@email.com
 
 
 //                          update
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/update?name=naeem&email=majid@email.com
+GET http://localhost:5000/update?name=naeem&email=majid@email.com
 
 //                          delete
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=majid@email.com
+GET http://localhost:5000/delete?email=majid@email.com
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/all
+GET http://localhost:5000/all
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=absar@email.com
+GET http://localhost:5000/delete?email=absar@email.com
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/all
+GET http://localhost:5000/all
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=bilal@email.com
+GET http://localhost:5000/delete?email=bilal@email.com
 
 ###
-GET https://final-year-project-ecommerce-exri.onrender.com/all
+GET http://localhost:5000/all
