@@ -68,7 +68,6 @@ app.get('/signup', async (req, res) => {
 
         const token = jwt.sign(
             {
-             
                 id: user.id,
                 email: user.email,
                 name: user.name
@@ -115,7 +114,7 @@ app.get('/login', async (req, res) => {
 });
 
 // Middleware to authenticate token
-const authenticateToken = async (req, res, next) => {
+const authenticateToken =async (req, res, next) => {
     const token = req.header('auth-token');
     if (!token) return res.status(401).json({ errors: "Please authenticate using valid token" });
 
