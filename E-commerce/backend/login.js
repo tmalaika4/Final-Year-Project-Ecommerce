@@ -120,8 +120,8 @@ const authenticateToken = async (req, res, next) => {
     if (!token) return res.status(401).json({ errors: "Please authenticate using valid token" });
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Attach the user info to the request
+        const data = jwt.verify(token, 'secret_ecom');
+        req.user = data.user;
         next();
     } catch (error) {
         res.status(401).json({ errors: "Invalid token" });
