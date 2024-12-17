@@ -27,13 +27,13 @@ GET https://final-year-project-ecommerce-exri.onrender.com/login?email=majid@ema
 //                          update
 ###
 GET https://final-year-project-ecommerce-exri.onrender.com/update?name=majid&email=majid@email.com
-auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NWZlNGM0NDA5ZGFiNDE4ODc3ZTQ2ZCIsImVtYWlsIjoibWFqaWRAZW1haWwuY29tIiwiaWF0IjoxNzM0MzQwMDYwfQ.tYGGoW8Zs3Slnb2gvufw4q7QIlgL-mZiVxlxpKBPCuc
+auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjAzZDVkNGUyYmJiOTg0MDhlYWI4YiIsImVtYWlsIjoibWFqaWRAZW1haWwuY29tIiwiaWF0IjoxNzM0MzYwNDMxfQ.GBJ7O-bU9nn5sQYgrgLHLihMg6LQyGfQA9lDROLT6mI
 ###
 
 //                          delete
 ###
 GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=majid@email.com
-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NWZlNGM0NDA5ZGFiNDE4ODc3ZTQ2ZCIsImVtYWlsIjoibWFqaWRAZW1haWwuY29tIiwiaWF0IjoxNzM0MzM5OTk3fQ.8J1wewHWf3unUstHxoGIYKQbJxH-h6AyYaqouqRZoeA
+auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjAzZDVkNGUyYmJiOTg0MDhlYWI4YiIsImVtYWlsIjoibWFqaWRAZW1haWwuY29tIiwiaWF0IjoxNzM0MzYwNDMxfQ.GBJ7O-bU9nn5sQYgrgLHLihMg6LQyGfQA9lDROLT6mI
 ###
 GET https://final-year-project-ecommerce-exri.onrender.com/all
 
@@ -48,3 +48,4 @@ GET https://final-year-project-ecommerce-exri.onrender.com/delete?email=bilal@em
 
 ###
 GET https://final-year-project-ecommerce-exri.onrender.com/all
+auth-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjAzZDVkNGUyYmJiOTg0MDhlYWI4YiIsImVtYWlsIjoibWFqaWRAZW1haWwuY29tIiwiaWF0IjoxNzM0MzYwNDMxfQ.GBJ7O-bU9nn5sQYgrgLHLihMg6LQyGfQA9lDROLT6mI

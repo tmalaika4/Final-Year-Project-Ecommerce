@@ -31,7 +31,7 @@ const ShopContextProvider = (props) =>{
     
     const fetchCartData = () => {
         if (localStorage.getItem('auth-token')) {
-            fetch('http://localhost:8080/getcart', {
+            fetch('https://final-year-project-ecommerce-cart.onrender.com/getcart', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/form-data',
@@ -62,7 +62,7 @@ const ShopContextProvider = (props) =>{
     const addToCart = (itemId) => { 
         // Sync with server
         if (localStorage.getItem('auth-token')) {
-            fetch('http://localhost:8080/addtocart', {
+            fetch('https://final-year-project-ecommerce-cart.onrender.com/addtocart', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/form-data',
@@ -85,7 +85,7 @@ const ShopContextProvider = (props) =>{
     
     const RemoveFromCart = (itemId,refresh = true) => {
         if (localStorage.getItem('auth-token')) {
-            fetch('http://localhost:8080/removefromcart', {
+            fetch('https://final-year-project-ecommerce-cart.onrender.com/removefromcart', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/form-data',

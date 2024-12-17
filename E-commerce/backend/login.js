@@ -66,15 +66,7 @@ app.get('/signup', async (req, res) => {
         await user.save();
         
 
-        const token = jwt.sign(
-            {
-                id: user.id,
-                email: user.email,
-                name: user.name
-              
-            },
-            'secret_ecom'
-          );
+        const token = jwt.sign({ user: { id: user.id, email: user.email, name: user.name }}, 'secret_ecom');
         res.json({ success: true, token });
         
     } catch (error) {
@@ -94,15 +86,7 @@ app.get('/login', async (req, res) => {
     try {
         const user = await Users.findOne({ email });
         if (user) {
-            const token = jwt.sign(
-                {
-                 
-                    id: user.id,
-                    email: user.email,
-                  
-                },
-                'secret_ecom'
-            );
+            const token = jwt.sign({ user: { id: user.id, email: user.email, name: user.name } }, 'secret_ecom');
             res.json({ success: true, token });
         } else {
             res.status(404).json({ success: false, message: "User not found" });
@@ -112,7 +96,6 @@ app.get('/login', async (req, res) => {
         res.status(500).json({ success: false, message: "Error fetching user", error });
     }
 });
-
 // Middleware to authenticate token
 const authenticateToken =async (req, res, next) => {
     const token = req.header('auth-token');

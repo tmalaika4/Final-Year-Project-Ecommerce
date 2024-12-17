@@ -39,7 +39,7 @@ const LoginSignUp = () => {
   const signup = async () => {
     console.log("signup Function Executed", formData);
     try {
-      const response = await fetch(`https://final-year-project-ecommerce-exri.onrender.com/signup?name=${formData.name}&email=${formData.email}&password=${formData.password}`, {
+      const response = await fetch(`https://final-year-project-ecommerce-exri.onrender.com/signup?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',

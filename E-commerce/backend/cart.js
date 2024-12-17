@@ -27,6 +27,7 @@ const fetchUser = async (req, res, next) => {
     try {
         const data = jwt.verify(token, 'secret_ecom');
         req.user = data.user;
+        console.log(data.user);
         next();
     } catch (error) {
         res.status(401).json({ errors: "Invalid token" });
@@ -80,13 +81,18 @@ app.post('/removefromcart', fetchUser, async (req, res) => {
 
 // Get user cart data
 app.post('/getcart', fetchUser, async (req, res) => {
-    const user = await Users.findOne({ _id: req.user.id });
-    if (user && user.cartData) {
-        res.json(user.cartData);
+    if (req.user && req.user.id) {
+        const user = await Users.findOne({ _id: req.user.id });
+        if (user && user.cartData) {
+            res.json(user.cartData);
+        } else {
+            res.status(404).json({ message: "User or cart data not found" });
+        }
     } else {
-        res.status(404).json({ message: "User or cart data not found" });
+        res.status(401).json({ errors: "User not authenticated" });
     }
 });
+
 
 app.listen(port, (error) => {
     if (!error) console.log("Database Server 1 Running on Port " + port);
